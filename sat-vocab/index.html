@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="SAT Vocab" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#2557a7" />
+    <title>Eashan SAT Vocab Trainer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Study controls">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">SAT</div>
+          <div>
+            <h1>Vocab Trainer</h1>
+            <p>College Panda SAT word practice</p>
+          </div>
+        </div>
+
+        <section class="stats-grid" aria-label="Progress">
+          <div>
+            <span id="masteredCount">0</span>
+            <label>Mastered</label>
+          </div>
+          <div>
+            <span id="streakCount">0</span>
+            <label>Streak</label>
+          </div>
+          <div>
+            <span id="dueCount">0</span>
+            <label>Due</label>
+          </div>
+        </section>
+
+        <div class="controls">
+          <label for="modeSelect">Mode</label>
+          <select id="modeSelect">
+            <option value="flash">Flashcards</option>
+            <option value="quiz">Multiple choice</option>
+            <option value="type">Type answer</option>
+            <option value="match">Speed match</option>
+            <option value="import">Import words</option>
+          </select>
+        </div>
+
+        <div class="controls">
+          <label for="deckFilter">Deck focus</label>
+          <select id="deckFilter">
+            <option value="all">All words</option>
+            <option value="due">Due / weak words</option>
+            <option value="new">New words</option>
+            <option value="mastered">Mastered review</option>
+          </select>
+        </div>
+
+        <div class="controls">
+          <label for="dailyGoal">Daily goal</label>
+          <input id="dailyGoal" type="range" min="10" max="80" value="30" step="5" />
+          <output id="dailyGoalOut">30 words</output>
+        </div>
+
+        <div class="action-row">
+          <button id="resetSessionBtn" type="button">New round</button>
+          <button id="resetProgressBtn" type="button">Reset progress</button>
+        </div>
+      </aside>
+
+      <section class="stage" aria-live="polite">
+        <div class="progress-strip">
+          <div>
+            <strong id="sessionTitle">Flashcards</strong>
+            <span id="sessionMeta">Review the word, then mark recall.</span>
+          </div>
+          <div class="meter" aria-label="Daily progress">
+            <div id="goalMeter"></div>
+          </div>
+        </div>
+
+        <section id="flashView" class="mode-panel">
+          <div class="word-card" id="flashCard" tabindex="0" role="button" aria-label="Flip flashcard">
+            <div class="card-face">
+              <p class="eyebrow" id="flashTag">Word</p>
+              <h2 id="flashWord">abate</h2>
+              <p id="flashHint">Click card or press Space to reveal the meaning.</p>
+            </div>
+          </div>
+          <div class="answer-row">
+            <button id="forgotBtn" type="button">Missed</button>
+            <button id="flipBtn" type="button">Reveal</button>
+            <button id="knewBtn" type="button">Knew it</button>
+          </div>
+        </section>
+
+        <section id="quizView" class="mode-panel hidden">
+          <div class="prompt-line">
+            <p class="eyebrow">Choose the meaning</p>
+            <h2 id="quizWord">abate</h2>
+          </div>
+          <div id="quizChoices" class="choice-grid"></div>
+          <p id="quizFeedback" class="feedback"></p>
+        </section>
+
+        <section id="typeView" class="mode-panel hidden">
+          <div class="prompt-line">
+            <p class="eyebrow">Type the word</p>
+            <h2 id="typeDefinition">to reduce in intensity</h2>
+          </div>
+          <form id="typeForm" class="type-form">
+            <input id="typeInput" autocomplete="off" spellcheck="false" placeholder="Enter word" />
+            <button type="submit">Check</button>
+          </form>
+          <p id="typeFeedback" class="feedback"></p>
+        </section>
+
+        <section id="matchView" class="mode-panel hidden">
+          <div class="match-head">
+            <div>
+              <p class="eyebrow">Speed match</p>
+              <h2>Pair words with meanings</h2>
+            </div>
+            <div class="timer"><span id="matchTimer">0.0</span>s</div>
+          </div>
+          <div id="matchBoard" class="match-board"></div>
+          <p id="matchFeedback" class="feedback"></p>
+        </section>
+
+        <section id="importView" class="mode-panel hidden">
+          <div class="import-layout">
+            <div>
+              <p class="eyebrow">Import Quizlet terms</p>
+              <h2>Paste exported words</h2>
+              <p class="body-copy">
+                Open Quizlet, use export/copy if available, then paste one term and definition per line. Supported formats:
+                term TAB definition, term - definition, or term: definition.
+              </p>
+              <textarea id="importText" placeholder="abate	to reduce in intensity&#10;aberration - a departure from what is normal&#10;abstain: to choose not to do something"></textarea>
+              <div class="answer-row">
+                <button id="importBtn" type="button">Import words</button>
+                <button id="restoreStarterBtn" type="button">Restore starter deck</button>
+              </div>
+            </div>
+            <div class="import-note">
+              <h3>Quizlet note</h3>
+              <p>
+                The linked Quizlet set is protected, so the app keeps working with a starter SAT list and lets you paste the official export later.
+              </p>
+              <p>
+                Password for the set: <strong>mindfish</strong>
+              </p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./vocab-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
