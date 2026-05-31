@@ -222,23 +222,27 @@ function gatsbyExample(card) {
   const sets = {
     verb: {
       simple: `Gatsby tried to ${verbPhrase(card)} his nervousness when Daisy arrived at the mansion.`,
-      medium: `As the evening grew tense, Gatsby attempted to ${verbPhrase(card)} the awkward silence with careful charm, but Nick could still sense his anxiety.`
+      medium: `As the evening grew tense, Gatsby attempted to ${verbPhrase(card)} the awkward silence with careful charm, but Nick could still sense his anxiety.`,
+      sat: `The historian uses new archival evidence to ${verbPhrase(card)} the earlier interpretation of the event.`
     },
     noun: {
       simple: `Nick noticed a clear example of ${word} during the quiet moments after Gatsby's party ended.`,
-      medium: `Behind the music and bright shirts, the ${word} in Gatsby's life revealed how much of his dream depended on Daisy.`
+      medium: `Behind the music and bright shirts, the ${word} in Gatsby's life revealed how much of his dream depended on Daisy.`,
+      sat: `The passage emphasizes the ${word} between the scientist's public claims and the data presented in the study.`
     },
     adjective: {
       simple: `Gatsby seemed ${word} when he waited for Daisy near the glowing windows.`,
-      medium: `To Nick, the party looked glamorous at first, but Gatsby's ${word} expression suggested a private worry beneath the display.`
+      medium: `To Nick, the party looked glamorous at first, but Gatsby's ${word} expression suggested a private worry beneath the display.`,
+      sat: `The author's tone is ${word}, carefully weighing both the benefits and limitations of the proposed policy.`
     },
     adverb: {
       simple: `Gatsby spoke ${word} when he asked Nick about Daisy.`,
-      medium: `Although the room was crowded, Gatsby moved ${word} through the party, as if every gesture had been planned for Daisy's arrival.`
+      medium: `Although the room was crowded, Gatsby moved ${word} through the party, as if every gesture had been planned for Daisy's arrival.`,
+      sat: `The researchers responded ${word}, revising their conclusion only after additional evidence became available.`
     }
   };
   const chosen = sets[usage];
-  return `<strong>Simple:</strong> ${chosen.simple}<span><strong>Medium:</strong> ${chosen.medium}</span>`;
+  return `<strong>Simple:</strong> ${chosen.simple}<span><strong>Medium:</strong> ${chosen.medium}</span><span><strong>SAT-style:</strong> ${chosen.sat}</span>`;
 }
 
 function getFilteredDeck() {
