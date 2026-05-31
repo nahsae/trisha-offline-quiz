@@ -107,6 +107,7 @@ const els = {
   flashTag: document.getElementById("flashTag"),
   flashWord: document.getElementById("flashWord"),
   flashHint: document.getElementById("flashHint"),
+  flashExample: document.getElementById("flashExample"),
   forgotBtn: document.getElementById("forgotBtn"),
   flipBtn: document.getElementById("flipBtn"),
   knewBtn: document.getElementById("knewBtn"),
@@ -115,10 +116,12 @@ const els = {
   quizWord: document.getElementById("quizWord"),
   quizChoices: document.getElementById("quizChoices"),
   quizFeedback: document.getElementById("quizFeedback"),
+  quizExample: document.getElementById("quizExample"),
   typeDefinition: document.getElementById("typeDefinition"),
   typeForm: document.getElementById("typeForm"),
   typeInput: document.getElementById("typeInput"),
   typeFeedback: document.getElementById("typeFeedback"),
+  typeExample: document.getElementById("typeExample"),
   matchTimer: document.getElementById("matchTimer"),
   matchBoard: document.getElementById("matchBoard"),
   matchFeedback: document.getElementById("matchFeedback"),
@@ -190,6 +193,26 @@ function progressFor(card) {
     state.progress[card.id] = { correct: 0, missed: 0, seen: 0, last: null };
   }
   return state.progress[card.id];
+}
+
+function wordForSentence(card) {
+  return card.term.replace(/\s*\([^)]*\)/g, "").trim();
+}
+
+function gatsbyExample(card) {
+  const word = wordForSentence(card);
+  const templates = [
+    `Nick noticed the ${word} mood of the party as laughter rose and faded across West Egg.`,
+    `Gatsby tried to sound ${word} when Daisy asked whether the green light still mattered to him.`,
+    `At Tom's table, Jordan gave a ${word} glance that made Nick question what had just been said.`,
+    `The mansion's music felt ${word} after midnight, when the guests left and Gatsby stood alone.`,
+    `Daisy's voice made even a ${word} remark seem polished, careless, and difficult to ignore.`,
+    `In the valley of ashes, the billboard gave the scene a strangely ${word} quality.`,
+    `Gatsby's hope remained ${word}, even when the facts around him became harder to deny.`,
+    `Nick later remembered the evening as ${word}, full of bright surfaces and uneasy meanings.`
+  ];
+  const numericId = Number((card.id || "").match(/\d+/)?.[0] || 0);
+  return templates[numericId % templates.length];
 }
 
 function getFilteredDeck() {
@@ -282,6 +305,7 @@ function renderFlash() {
   els.flashTag.textContent = "Word";
   els.flashWord.textContent = session.current.term;
   els.flashHint.textContent = "Click card or press Space to reveal the meaning.";
+  els.flashExample.textContent = "";
 }
 
 function flipFlash() {
@@ -289,12 +313,14 @@ function flipFlash() {
   els.flashTag.textContent = session.revealed ? "Meaning" : "Word";
   els.flashWord.textContent = session.revealed ? session.current.definition : session.current.term;
   els.flashHint.textContent = session.revealed ? session.current.term : "Click card or press Space to reveal the meaning.";
+  els.flashExample.textContent = session.revealed ? gatsbyExample(session.current) : "";
 }
 
 function renderQuiz() {
   nextCard();
   els.quizFeedback.textContent = "";
   els.quizFeedback.className = "feedback";
+  els.quizExample.textContent = "";
   els.quizWord.textContent = session.current.term;
   const wrong = shuffle(state.deck.filter((card) => card.id !== session.current.id)).slice(0, 3);
   const choices = shuffle([session.current, ...wrong]);
@@ -308,8 +334,9 @@ function renderQuiz() {
       btn.classList.add(correct ? "correct" : "wrong");
       els.quizFeedback.textContent = correct ? "Correct. Clean recall." : `Missed. ${session.current.term}: ${session.current.definition}`;
       els.quizFeedback.className = `feedback ${correct ? "good" : "bad"}`;
+      els.quizExample.textContent = gatsbyExample(session.current);
       record(session.current, correct);
-      setTimeout(renderQuiz, 900);
+      setTimeout(renderQuiz, 1800);
     });
     els.quizChoices.appendChild(btn);
   }
@@ -321,6 +348,7 @@ function renderType() {
   els.typeInput.value = "";
   els.typeFeedback.textContent = "";
   els.typeFeedback.className = "feedback";
+  els.typeExample.textContent = "";
   setTimeout(() => els.typeInput.focus(), 50);
 }
 
@@ -445,8 +473,9 @@ els.typeForm.addEventListener("submit", (event) => {
   const correct = normalize(els.typeInput.value) === normalize(session.current.term);
   els.typeFeedback.textContent = correct ? "Correct." : `Missed. Answer: ${session.current.term}`;
   els.typeFeedback.className = `feedback ${correct ? "good" : "bad"}`;
+  els.typeExample.textContent = gatsbyExample(session.current);
   record(session.current, correct);
-  setTimeout(renderType, 1000);
+  setTimeout(renderType, 1800);
 });
 els.importBtn.addEventListener("click", () => {
   const imported = parseImport(els.importText.value);
