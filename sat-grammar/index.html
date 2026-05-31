@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="SAT Grammar" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="theme-color" content="#1f6f5b" />
+    <title>Eashan SAT Grammar Trainer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="SAT grammar controls">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">RW</div>
+          <div>
+            <h1>Grammar Trainer</h1>
+            <p>Standard English Conventions</p>
+          </div>
+        </div>
+
+        <section class="stats-grid" aria-label="Progress">
+          <div>
+            <span id="correctCount">0</span>
+            <label>Correct</label>
+          </div>
+          <div>
+            <span id="streakCount">0</span>
+            <label>Streak</label>
+          </div>
+          <div>
+            <span id="accuracyCount">0%</span>
+            <label>Accuracy</label>
+          </div>
+        </section>
+
+        <div class="controls">
+          <label for="modeSelect">Mode</label>
+          <select id="modeSelect">
+            <option value="drill">Question drill</option>
+            <option value="rules">Rule cards</option>
+            <option value="decision">Punctuation tree</option>
+            <option value="blurt">Blurt practice</option>
+          </select>
+        </div>
+
+        <div class="controls">
+          <label for="topicSelect">Topic focus</label>
+          <select id="topicSelect">
+            <option value="all">All grammar topics</option>
+            <option value="punctuation">Punctuation</option>
+            <option value="clauses">Clauses</option>
+            <option value="agreement">Subject-verb agreement</option>
+            <option value="verbs">Verb tense</option>
+            <option value="modifiers">Modifiers</option>
+            <option value="parallelism">Parallelism</option>
+            <option value="pronouns">Pronouns</option>
+          </select>
+        </div>
+
+        <div class="action-row">
+          <button id="newRoundBtn" type="button">New round</button>
+          <button id="resetBtn" type="button">Reset progress</button>
+        </div>
+      </aside>
+
+      <section class="stage" aria-live="polite">
+        <div class="top-strip">
+          <div>
+            <strong id="screenTitle">Question drill</strong>
+            <span id="screenMeta">Pick the answer that makes the sentence correct.</span>
+          </div>
+          <div class="pill" id="topicPill">All topics</div>
+        </div>
+
+        <section id="drillView" class="mode-panel">
+          <div class="question-card">
+            <p class="eyebrow" id="questionTopic">Punctuation</p>
+            <h2 id="questionText">Loading...</h2>
+            <div id="choiceGrid" class="choice-grid"></div>
+            <div id="feedback" class="feedback"></div>
+          </div>
+        </section>
+
+        <section id="rulesView" class="mode-panel hidden">
+          <div class="rule-card">
+            <p class="eyebrow" id="ruleTopic">Rule</p>
+            <h2 id="ruleTitle">Independent Clause</h2>
+            <p id="ruleBody"></p>
+            <div class="rule-example" id="ruleExample"></div>
+          </div>
+          <div class="answer-row">
+            <button id="prevRuleBtn" type="button">Previous</button>
+            <button id="nextRuleBtn" type="button">Next rule</button>
+          </div>
+        </section>
+
+        <section id="decisionView" class="mode-panel hidden">
+          <div class="tree-grid" id="treeGrid"></div>
+        </section>
+
+        <section id="blurtView" class="mode-panel hidden">
+          <div class="blurt-layout">
+            <div class="rule-card">
+              <p class="eyebrow">Memory check</p>
+              <h2 id="blurtPrompt">Write all seven FANBOYS.</h2>
+              <textarea id="blurtInput" placeholder="Type from memory here..."></textarea>
+              <div class="answer-row">
+                <button id="showAnswerBtn" type="button">Show answer</button>
+                <button id="nextBlurtBtn" type="button">Next prompt</button>
+              </div>
+            </div>
+            <div id="blurtAnswer" class="answer-panel"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./grammar-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
