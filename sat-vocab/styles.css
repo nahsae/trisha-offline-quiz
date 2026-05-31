@@ -275,6 +275,20 @@ output {
   color: var(--muted);
 }
 
+.example-line {
+  max-width: 760px;
+  margin: 12px auto 0;
+  color: #344054;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.example-line::before {
+  content: "Gatsby example: ";
+  color: var(--gold);
+  font-weight: 800;
+}
+
 .prompt-line {
   background: var(--white);
   border: 1px solid var(--line);
@@ -456,6 +470,10 @@ textarea {
 
   #flashHint {
     font-size: 17px;
+  }
+
+  .example-line {
+    font-size: 16px;
   }
 
   .choice-grid button,
